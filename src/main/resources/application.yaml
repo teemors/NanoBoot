@@ -1,0 +1,44 @@
+server:
+  port: 8083
+spring:
+  redis:
+    redisson:
+      file: classpath:redisson-single.yaml
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    timeout: 1000ms
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.16.10.100:3306/ry-vue?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true
+    username: root
+    password: 1234
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 30000       # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 默认:30秒
+      minimum-idle: 5                 # 最小连接数
+      maximum-pool-size: 50           # 最大连接数
+      auto-commit: true               # 自动提交
+      idle-timeout: 600000            # 连接超时的最大时长（毫秒），超时则被释放（retired），默认:10分钟
+      pool-name: DataSourceHikariCP_A     # 连接池名字
+      max-lifetime: 1800000           # 连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认:30分钟 1800000ms
+      connection-test-query: SELECT 1
+
+
+
+logging:
+  file:
+    path: /opt/spring/
+  level:
+    root: info
+    com.teemor: debug
+  config: classpath:logback-spring.xml
+
+knife4j:
+  enable: true
+
+teemor:
+  jwt-secret: yHYvG51FpCU50YS04a/2Qr2Q52cccQhyLVBxmmph8ng=
+  bypass-url:
+    - "/**/captchaImage"
+    - "/**/login"
